@@ -23,7 +23,7 @@ pub(crate) const EU_ORIGIN: Origin = Origin {
 };
 
 /// Details of the US origin. You must edit the bucket_name, 
-/// and likely the host and region too!
+/// and likely the host!
 pub(crate) const US_ORIGIN: Origin = Origin {
     backend_name: "us_origin",
     bucket_name: "fastly-demo-us",

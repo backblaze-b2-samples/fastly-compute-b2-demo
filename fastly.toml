@@ -4,8 +4,8 @@ authors = ["ppatterson@backblaze.com"]
 description = "Demo of Fastly C@E with Backblaze B2"
 language = "rust"
 manifest_version = 2
-name = "fastly-b2-demo"
-service_id = "1wzfsRkHqiR0J0Juz53iUC"
+name = "fastly-compute-b2-demo"
+service_id = ""
 
 # Edit the backends below to match your B2 endpoints
 
