@@ -3,7 +3,7 @@
 
 mod config;
 
-use crate::config::{POP_ORIGIN, DEFAULT_POP, US_ORIGIN, Origin};
+use crate::config::{POP_ORIGIN, DEFAULT_POP, US_ORIGIN, REGION_REGEX, Origin};
 
 use fastly::http::{header, Method};
 use fastly::{Error, Request, Response};
@@ -93,12 +93,15 @@ fn set_authentication_headers(req: &mut Request, origin: &Origin) {
         _ => return,
     };
 
+    // Extract region from the endpoint
+    let bucket_region = REGION_REGEX.find(origin.bucket_host).unwrap().as_str();
+
     let client = awsv4::SignatureClient {
         access_key_id: id,
         secret_access_token: key,
         bucket_name: origin.bucket_name.to_string(),
         bucket_host: origin.bucket_host.to_string(),
-        bucket_region: origin.bucket_region.to_string(),
+        bucket_region: bucket_region.to_string(),
         query_string: req.get_query_str().unwrap_or("").to_string()
     };
 

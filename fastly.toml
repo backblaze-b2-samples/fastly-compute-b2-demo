@@ -7,6 +7,8 @@ manifest_version = 2
 name = "fastly-b2-demo"
 service_id = "1wzfsRkHqiR0J0Juz53iUC"
 
+# Edit the backends below to match your B2 endpoints
+
 [local_server]
 
   [local_server.backends]

@@ -1,4 +1,5 @@
 use lazy_static::lazy_static;
+use regex::Regex;
 use std::collections::HashMap;
 
 /// Default edge server code - used when running on the local test server
@@ -12,8 +13,6 @@ pub struct Origin {
     pub bucket_name: &'static str,
     /// The host that the bucket is served on. This is used to make requests to the backend.
     pub bucket_host: &'static str,
-    /// The storage service region to use.
-    pub bucket_region: &'static str,
 }
 
 /// Details of the EU origin. You must edit the bucket_name!
@@ -21,7 +20,6 @@ pub(crate) const EU_ORIGIN: Origin = Origin {
     backend_name: "eu_origin",
     bucket_name: "fastly-demo-eu",
     bucket_host: "s3.eu-central-003.backblazeb2.com",
-    bucket_region: "eu-central-003",
 };
 
 /// Details of the US origin. You must edit the bucket_name, 
@@ -30,8 +28,12 @@ pub(crate) const US_ORIGIN: Origin = Origin {
     backend_name: "us_origin",
     bucket_name: "fastly-demo-us",
     bucket_host: "s3.us-west-004.backblazeb2.com",
-    bucket_region: "us-west-004",
 };
+
+lazy_static! {
+    /// Regex for extracting region from endpoint
+    pub(crate) static ref REGION_REGEX: Regex = Regex::new(r"^s3\.([[:alnum:]\-]+)\.backblazeb2\.com$").unwrap();
+}
 
 // If auth is required, configure your access keys in an edge dictionary named "bucket_auth":
 // <backend_name>_access_key_id
