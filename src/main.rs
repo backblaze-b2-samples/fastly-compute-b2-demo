@@ -37,10 +37,8 @@ fn main(mut req: Request) -> Result<Response, Error> {
     req.remove_query();
 
     // Set the `Host` header to the bucket name + host rather than our C@E endpoint.
-    req.set_header(
-        header::HOST,
-        format!("{}.{}", origin.bucket_name, origin.bucket_host),
-    );
+    let host = format!("{}.{}", origin.bucket_name, origin.bucket_host);
+    req.set_header(header::HOST, &host);
 
     // Copy the modified client request to form the backend request.
     let mut bereq = req.clone_without_body();
@@ -48,8 +46,14 @@ fn main(mut req: Request) -> Result<Response, Error> {
     // Set the AWS V4 authentication headers
     set_authentication_headers(&mut bereq, &origin);
 
-    // Send the request to the backend and return the response to the client.
-    return Ok(bereq.send(origin.backend_name)?);
+    // Send the request to the backend and assign its response to `beresp`.
+    let mut beresp = bereq.send(origin.backend_name)?;
+
+    // Set a response header indicating the origin that we used
+    beresp.set_header("X-B2-Host", &host);
+
+    // return the response to the client.
+    return Ok(beresp);
 }
 
 /// Return the three letter identifier of the edge server ('POP') on which

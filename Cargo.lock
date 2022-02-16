@@ -111,7 +111,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "fastly-b2-demo"
+name = "fastly-compute-b2-demo"
 version = "0.1.0"
 dependencies = [
  "cfg-if",
