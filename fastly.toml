@@ -1,7 +1,7 @@
 # Fastly / Backblaze B2 Demo
 
 authors = ["ppatterson@backblaze.com"]
-description = "Demo of Fastly C@E with Backblaze B2"
+description = "Demo of Fastly Compute@Edge with Backblaze B2"
 language = "rust"
 manifest_version = 2
 name = "fastly-compute-b2-demo"
@@ -10,23 +10,31 @@ service_id = ""
 # Edit the backends below to match your B2 endpoints
 
 [local_server]
-
   [local_server.backends]
-
     [local_server.backends.eu_origin]
       url = "https://fastly-demo-eu.s3.eu-central-003.backblazeb2.com"
-
     [local_server.backends.us_origin]
       url = "https://fastly-demo-us.s3.us-west-004.backblazeb2.com"
 
 [setup]
-
   [setup.backends]
-
     [setup.backends.eu_origin]
+      description = "B2 Endpoint for EU origin"
       address = "fastly-demo-eu.s3.eu-central-003.backblazeb2.com"
       port = 443
-
     [setup.backends.us_origin]
+      description = "B2 Endpoint for US origin"
       address = "fastly-demo-us.s3.us-west-004.backblazeb2.com"
       port = 443
+
+  [setup.dictionaries]
+    [setup.dictionaries.bucket_auth]
+      [setup.dictionaries.bucket_auth.items]
+        [setup.dictionaries.bucket_auth.items.eu_origin_access_key_id]
+          description = "B2 Application Key ID for EU Origin"
+        [setup.dictionaries.bucket_auth.items.eu_origin_secret_access_key]
+          description = "B2 Application Key for EU Origin"
+        [setup.dictionaries.bucket_auth.items.us_origin_access_key_id]
+          description = "B2 Application Key ID for US Origin"
+        [setup.dictionaries.bucket_auth.items.us_origin_secret_access_key]
+          description = "B2 Application Key for US Origin"

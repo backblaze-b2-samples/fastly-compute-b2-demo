@@ -37,7 +37,7 @@ fn main(mut req: Request) -> Result<Response, Error> {
     req.remove_query();
 
     // Set the `Host` header to the bucket name + host rather than our C@E endpoint.
-    let host = format!("{}.{}", origin.bucket_name, origin.bucket_host);
+    let host = format!("{}.{}", origin.bucket_name, origin.endpoint);
     req.set_header(header::HOST, &host);
 
     // Copy the modified client request to form the backend request.
@@ -98,13 +98,13 @@ fn set_authentication_headers(req: &mut Request, origin: &Origin) {
     };
 
     // Extract region from the endpoint
-    let bucket_region = REGION_REGEX.find(origin.bucket_host).unwrap().as_str();
+    let bucket_region = REGION_REGEX.find(origin.endpoint).unwrap().as_str();
 
     let client = awsv4::SignatureClient {
         access_key_id: id,
         secret_access_token: key,
         bucket_name: origin.bucket_name.to_string(),
-        bucket_host: origin.bucket_host.to_string(),
+        bucket_host: origin.endpoint.to_string(),
         bucket_region: bucket_region.to_string(),
         query_string: req.get_query_str().unwrap_or("").to_string()
     };

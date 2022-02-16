@@ -18,7 +18,7 @@ Edit the `EU_ORIGIN` and `US_ORIGIN` structs in `src/config.rs` to match your en
 
 * `backend_name`: The name of your storage backend, as configured in the Fastly UI
 * `bucket_name`: The name of the bucket
-* `bucket_host`: The endpoint of the bucket, e.g. `s3.eu-central-003.backblazeb2.com`
+* `endpoint`: The endpoint of the bucket, e.g. `s3.eu-central-003.backblazeb2.com`
 
 If you are using a private bucket, you will need to create an [Edge Dictionary](https://docs.fastly.com/en/guides/about-edge-dictionaries) named `bucket_auth` with the following values for each region:
 

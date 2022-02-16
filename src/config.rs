@@ -12,22 +12,22 @@ pub struct Origin {
     /// The name of the bucket to serve content from.
     pub bucket_name: &'static str,
     /// The host that the bucket is served on. This is used to make requests to the backend.
-    pub bucket_host: &'static str,
+    pub endpoint: &'static str,
 }
 
 /// Details of the EU origin. You must edit the bucket_name!
 pub(crate) const EU_ORIGIN: Origin = Origin {
     backend_name: "eu_origin",
-    bucket_name: "fastly-demo-eu",
-    bucket_host: "s3.eu-central-003.backblazeb2.com",
+    bucket_name: "<your-eu-bucket>",
+    /// Currently B2 has only one EU endpoint
+    endpoint: "s3.eu-central-003.backblazeb2.com",
 };
 
-/// Details of the US origin. You must edit the bucket_name, 
-/// and likely the host!
+/// Details of the US origin. You must edit bucket_name and endpoint!
 pub(crate) const US_ORIGIN: Origin = Origin {
     backend_name: "us_origin",
-    bucket_name: "fastly-demo-us",
-    bucket_host: "s3.us-west-004.backblazeb2.com",
+    bucket_name: "<your-us-bucket>",
+    endpoint: "<your-us-endpoint>",
 };
 
 lazy_static! {
