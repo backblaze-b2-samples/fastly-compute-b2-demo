@@ -7,24 +7,26 @@ manifest_version = 2
 name = "fastly-compute-b2-demo"
 service_id = ""
 
-# Edit the backends below to match your B2 endpoints
+# Edit the backends below to match your B2 buckets and endpoints
 
+# Local server config wants URLs
 [local_server]
   [local_server.backends]
     [local_server.backends.eu_origin]
-      url = "https://fastly-demo-eu.s3.eu-central-003.backblazeb2.com"
+      url = "https://YOUR-EU-BUCKET.YOUR-EU-ENDPOINT"
     [local_server.backends.us_origin]
-      url = "https://fastly-demo-us.s3.us-west-004.backblazeb2.com"
+      url = "https://YOUR-US-BUCKET.YOUR-US-ENDPOINT"
 
+# Deploy on Fastly wants domains and ports
 [setup]
   [setup.backends]
     [setup.backends.eu_origin]
-      description = "B2 Endpoint for EU origin"
-      address = "fastly-demo-eu.s3.eu-central-003.backblazeb2.com"
+      description = "B2 Domain for EU origin"
+      address = "YOUR-EU-BUCKET.YOUR-EU-ENDPOINT"
       port = 443
     [setup.backends.us_origin]
-      description = "B2 Endpoint for US origin"
-      address = "fastly-demo-us.s3.us-west-004.backblazeb2.com"
+      description = "B2 Domain for US origin"
+      address = "YOUR-US-BUCKET.YOUR-US-ENDPOINT"
       port = 443
 
   [setup.dictionaries]
