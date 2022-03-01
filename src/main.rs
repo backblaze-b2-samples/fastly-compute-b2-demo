@@ -78,8 +78,8 @@ fn get_pop(req: &Request) -> String {
 /// Sets authentication headers for a given request.
 #[cfg(feature = "auth")]
 fn set_authentication_headers(req: &mut Request, origin: &Origin) {
-    // Ensure that request is a GET to prevent signing write operations
-    if req.get_method() != Method::GET {
+    // Ensure that request is a GET or HEAD to prevent signing write operations
+    if ![Method::GET, Method::HEAD].contains(&req.get_method()) {
         return;
     }
 
